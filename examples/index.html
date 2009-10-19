@@ -1,0 +1,169 @@
+﻿<html>
+ <head>
+  <title>TrustButVerify</title>
+  <link rel="stylesheet" href="stylesheets/sample.css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/livevalidation.1.3.compressed.js"></script>
+  <script type="text/javascript" src="javascripts/jquery.trustbutverify.1.0.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+
+      /* sample */    
+      var isNumeric = function(v){ return (v - 0) == v && v.length > 0; };
+      $.tbv.settings.wait = 1;
+      $.tbv.settings.validMessage = 'Ok';
+      $('input.required').required();
+      $('input.numeric').validate(isNumeric, 'must be a number');
+      $('#email').validEmail();
+      $('input.address').validLength({ minimum: 1, maximum: 50 });
+      $('#zip').matches(/^\d{5}$/);
+      
+      /* menu & demo */
+      $('#form').hide();
+      var adjustMenu = function(){
+        $('.menu a').each(function(i,e){
+          if($($(e).attr('href')).is(':visible'))
+            $(e).css({color: 'black', 'text-decoration': 'none'});
+          else 
+            $(e).css({color: '#FF7F27','text-decoration': 'underline'});
+        });
+      }
+      //$('form').submit(function(){ alert('Form Submitted!'); return false; });
+      $('.menu a').click(function(){
+        $('#form, #source').hide();
+        $($(this).attr('href')).show();
+        adjustMenu();
+        return false;
+      });
+      adjustMenu();
+    }); 
+  </script>  
+  <style type="text/css">
+    #form { 
+      border: 1px solid gray;
+      background: #ECECEC;
+      padding: 14px 7px;
+      margin: 10px 0; }
+    .menu {
+      margin-left: 800px; }
+  </style>
+ </head>
+ <body>
+  <h1>TrustButVerify</h1>
+  <span>( by <a href="http://www.kockerbeck.com">Mark Kockerbeck</a> )<br /></span>
+  <span>a terse plugin so jQuery selectors work with <a href="http://livevalidation.com/">LiveValidation</a></span>
+  <pre id="source" class="code">
+&lt;script type="text/javascript" src="js/jquery.1.3.2.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="js/livevalidation.1.3.compressed.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="js/<strong>jquery.trustbutverify.1.0.js</strong>"&gt;&lt;/script&gt;  
+&lt;script type="text/javascript" &gt;
+  $(document).ready(function(){
+    var isNumeric = function(v){ return (v - 0) == v && v.length > 0; };
+    $.<strong>tbv.settings.wait</strong> = 1;
+    $.<strong>tbv.settings.validMessage</strong> = 'Ok';
+    $('input.required').<strong>required</strong>();
+    $('input.numeric').<strong>validate</strong>(isNumeric, 'must be a number');
+    $('#email').<strong>validEmail()</strong>;
+    $('input.address').<strong>validLength({ minimum: 1, maximum: 50 })</strong>;
+    $('#zip').<strong>matches(/^\d{5}$/)</strong>;
+  });  
+&lt;/script&gt;
+</pre>
+  <div id="form">
+   <form action="?test=form" method="post">
+    <div class="field">
+        <label for="firstName">First Name</label><input type="text" id="firstName" class="required" friendly="First Name" />
+    </div>
+    <div class="field">
+        <label for="lastName">Last Name</label><input type="text" id="lastName" class="required" friendly="Last Name" />
+    </div>
+    <div class="field">
+        <label for="email">Email</label><input type="text" id="email" class="required" friendly="Email Address"/>
+    </div>
+    <div class="field">
+        <label for="age">Age</label><input type="text" id="age" class="required numeric" friendly="Age"/>
+    </div>
+    <div class="field">
+        <label for="pets">Number of Pets</label><input type="text" id="pets" class="required numeric" friendly="# of pets"/>
+    </div>
+    <div class="field">
+        <label for="city">City</label><input type="text" id="city" class="required address" friendly="City"/>
+    </div>
+    <div class="field">
+        <label for="address">Address</label><input type="text" id="address" class="required address" friendly="Address"/>
+    </div>
+    <div class="field">
+        <label for="zip">Zip</label><input type="text" id="zip" class="required zip" friendly="Zip Code"/>
+    </div>
+    <div class="field">
+      <input type="submit" value="submit" />
+    </div>
+   </form>    
+  </div>
+
+  <div class="menu">
+    <a href="#form">Demo</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#source">Source</a>
+  </div>
+    
+  <h3>Download</h3>
+  <ul>
+    <li><a href="./javascripts/jquery.trustbutverify.1.0.js">TrustButVerify 1.0</a> - development version (requires jQuery + LiveValidation)</li>
+  </ul>
+  
+  <h3>Examples</h3>
+  <ul>
+    <li><a href="required3.html">required</a></li>
+    <li><a href="validate2.html">validate</a></li>
+    <li><a href="matches2.html">matches</a></li>
+    <li><a href="doesntMatch2.html">doesntMatch</a></li>
+    <li><a href="email3.html">validEmail</a></li>
+    <li><a href="length3.html">validLength</a></li>
+    <li><a href="chaining1.html">Chaining</a></li>
+    <li><a href="options1.html">Settings</a></li>
+  </ul>
+  <p><strong>Settings</strong>&nbsp;&nbsp;&nbsp;<span class="code">$.tbv.settings;</span></p>
+  <ul>
+    <li><a href="options1.html">example 1</a> - a list of all options & how to change them</li>
+  </ul>
+  <p><strong>Chaining</strong>&nbsp;&nbsp;&nbsp;<span class="code">$('#email').required().validEmail().validate(function(v){ return !v.match("aol"); });</span></p>
+  <ul>
+    <li><a href="chaining1.html">example 1</a> - a simple chaining example</li>
+  </ul>
+  <p><strong>required</strong>&nbsp;&nbsp;&nbsp;<span class="code">$('input').required();</span></p>
+  <ul>
+    <li><a href="required1.html">example 1</a> - using a label to set the message</li>
+    <li><a href="required2.html">example 2</a> - same message for all</li>
+    <li><a href="required3.html">example 3</a> - using attributes to set the message</li>
+  </ul>
+  <p><strong>validate</strong>&nbsp;&nbsp;&nbsp;<span class="code">$('input').validate(function(v){ return true | false; });</span></p>
+  <ul>
+    <li><a href="validate1.html">example 1</a> - using a label to set a custom message</li>
+    <li><a href="validate2.html">example 2</a> - same message for all</li>
+    <li><a href="validate3.html">example 3</a> - using attributes to set the message</li>
+  </ul>
+  <p><strong>matches</strong>&nbsp;&nbsp;&nbsp;<span class="code">$('#zip').matches(/^d{5}$/);</span></p>
+  <ul>
+    <li><a href="matches1.html">example 1</a> - using a label to set a custom message</li>
+    <li><a href="matches2.html">example 2</a> - same message for all</li>
+    <li><a href="matches3.html">example 3</a> - default message</li>
+  </ul>
+  <p><strong>doesntMatch</strong>&nbsp;&nbsp;&nbsp;<span class="code">$('#email').doesntMatch(/.*\@aol\.com/);</span></p>
+  <ul>
+    <li><a href="doesntMatch1.html">example 1</a> - using a label to set a custom message</li>
+    <li><a href="doesntMatch2.html">example 2</a> - same message for all</li>
+    <li><a href="doesntMatch3.html">example 3</a> - default message</li>
+  </ul>
+  <p><strong>validEmail</strong>&nbsp;&nbsp;&nbsp;<span class="code">$('#email').validEmail();</span></p>
+  <ul>
+    <li><a href="email1.html">example 1</a> - using a label to set a custom message</li>
+    <li><a href="email2.html">example 2</a> - same message for all</li>
+    <li><a href="email3.html">example 3</a> - using attributes to set the message</li>
+  </ul>
+  <p><strong>validLength</strong>&nbsp;&nbsp;&nbsp;<span class="code">$('.address').validLength({ minimum: 5, maximum: 50 ));</span></p>
+  <ul>
+    <li><a href="length1.html">example 1</a> - using a label to set a custom message</li>
+    <li><a href="length2.html">example 2</a> - same message for all</li>
+    <li><a href="length3.html">example 3</a> - default message</li>
+  </ul>
+  </body>
+</html>
